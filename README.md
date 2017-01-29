@@ -1,4 +1,7 @@
 # Python Runtime Type Checks
+
+[![Build Status](https://api.travis-ci.org/petrbel/runtime_type_checks.svg?branch=master)](https://travis-ci.org/petrbel/runtime_type_checks)
+
 With Python3.5+ `typing` module, one may use simple `@runtime_type_checks` decorator in order to perform hard
 runtime checks of the passed parameters types and function return value type.
 
@@ -44,7 +47,7 @@ Do not hesitate to fork the project and make the pull request :)
 - [ ] test (and support) `Generics`
 - [ ] test `Any`
 - [ ] deploy to PYPI
-- [ ] Travis-CI
+- [x] Travis-CI
 - [ ] write better readme including tutorials, external resources etc.
 
 ## Contribution
