@@ -2,7 +2,7 @@
 With Python3.5+ `typing` module, one may use simple `@runtime_type_checks` decorator in order to perform hard
 runtime checks of the passed parameters types and function return value type.
 
-Disclaimer: this approx. 1.5 hour project, don't expect anything great or well tested.
+*Disclaimer: this approx. 1.5 hour project, don't expect anything great or well tested.*
 
 ## Installation
 So far, directly from GithHub, in near future via `pip`.
