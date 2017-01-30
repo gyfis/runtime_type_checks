@@ -7,7 +7,7 @@ class RuntimeTypeCheckError(TypeError):
     pass
 
 
-_UNINSTANTIABLE = [typing.AnyMeta, typing.TypeVar, typing.UnionMeta, typing.TupleMeta, typing.CallableMeta]
+_UNINSTANTIABLE = [typing.TypeVar, typing.UnionMeta, typing.TupleMeta, typing.CallableMeta]
 
 
 def _type_eq(value, value_type):
