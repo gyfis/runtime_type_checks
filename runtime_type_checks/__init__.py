@@ -52,6 +52,7 @@ def _type_eq(value, value_type):
         return True
 
     if str(typing.Union) in value_type_info:
+
         # python 3.5 support
         if hasattr(value_type, '__union_params__'):
             union_params = value_type.__union_params__
