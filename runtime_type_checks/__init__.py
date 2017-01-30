@@ -33,7 +33,7 @@ def _type_eq(value, value_type):
         if hasattr(value_type, '__tuple_params__'):
             tuple_params = value_type.__tuple_params__
         else:
-            tuple_params = value_type.__parameters__
+            tuple_params = value_type.__args__
 
         if not tuple_params:
             return True
@@ -56,7 +56,7 @@ def _type_eq(value, value_type):
         if hasattr(value_type, '__union_params__'):
             union_params = value_type.__union_params__
         else:
-            union_params = value_type.__parameters__
+            union_params = value_type.__args__
 
         if not union_params:
             return True
