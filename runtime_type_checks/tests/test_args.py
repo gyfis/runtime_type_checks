@@ -86,7 +86,7 @@ def typing_blank_type_var(t: blank_type):
 
 
 @runtime_type_checks
-def typing_primitive_type_var(t: blank_type):
+def typing_primitive_type_var(t: primitive_type):
     return t
 
 
