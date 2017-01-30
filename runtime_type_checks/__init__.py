@@ -29,7 +29,12 @@ def _type_eq(value, value_type):
         if not isinstance(value, tuple):
             return False
 
-        tuple_params = value_type.__tuple_params__
+        # python 3.5 support
+        if hasattr(value_type, '__tuple_params__'):
+            tuple_params = value_type.__tuple_params__
+        else:
+            tuple_params = value_type.__parameters__
+
         if not tuple_params:
             return True
 
@@ -47,14 +52,18 @@ def _type_eq(value, value_type):
         return True
 
     if str(typing.Union) in value_type_info:
-        union_constraints = value_type.__union_params__
+        # python 3.5 support
+        if hasattr(value_type, '__union_params__'):
+            union_params = value_type.__union_params__
+        else:
+            union_params = value_type.__parameters__
 
-        if not union_constraints:
+        if not union_params:
             return True
 
         if not any(_type_eq(value, constraint)
                    for constraint
-                   in union_constraints):
+                   in union_params):
             return False
         return True
 
