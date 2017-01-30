@@ -2,7 +2,7 @@ from runtime_type_checks import runtime_type_checks, RuntimeTypeCheckError
 
 import unittest
 
-from typing import Dict, Tuple, List, Iterable
+from typing import Dict, Tuple, List, Iterable, Union, TypeVar
 
 
 @runtime_type_checks
@@ -43,6 +43,51 @@ def typing_str_list(l: List[str]):
 @runtime_type_checks
 def typing_iterable(l: Iterable):
     return len(l)
+
+
+@runtime_type_checks
+def typing_tuple(t: Tuple):
+    return t
+
+
+@runtime_type_checks
+def typing_str_tuple(t: Tuple[str]):
+    return t
+
+
+@runtime_type_checks
+def typing_primitive_tuple(t: Tuple[str, int, list]):
+    return t
+
+
+@runtime_type_checks
+def typing_combined_tuple(t: Tuple[Tuple[str, int], Tuple[str, int]]):
+    return t
+
+
+@runtime_type_checks
+def typing_primitive_union(t: Union[int, str]):
+    return t
+
+
+# Union flattens = Union[Union[str, int], Union[str, int]] is the same as Union[str, int]
+@runtime_type_checks
+def typing_combined_union(t: Union[Union[int, str], Union[int, str]]):
+    return t
+
+
+blank_type = TypeVar('T')
+primitive_type = TypeVar('T', int, str)
+
+
+@runtime_type_checks
+def typing_blank_type_var(t: blank_type):
+    return t
+
+
+@runtime_type_checks
+def typing_primitive_type_var(t: blank_type):
+    return t
 
 
 class TestArgs(unittest.TestCase):
@@ -143,3 +188,79 @@ class TestArgs(unittest.TestCase):
     #         typing_str_list(l=['foo', 'bar'])
     #     except:
     #         assert False
+
+    def test_typing_tuple(self):
+        self.assertRaises(RuntimeTypeCheckError, typing_tuple, 10)
+        self.assertRaises(RuntimeTypeCheckError, typing_tuple, [])
+
+        try:
+            typing_tuple(())
+            typing_tuple((1, 2, 3))
+            typing_tuple(('foo',))
+        except:
+            assert False
+
+    def test_typing_str_tuple(self):
+        self.assertRaises(RuntimeTypeCheckError, typing_str_tuple, ())
+        self.assertRaises(RuntimeTypeCheckError, typing_str_tuple, (10, ))
+        self.assertRaises(RuntimeTypeCheckError, typing_str_tuple, ('a', 'b'))
+
+        try:
+            typing_str_tuple(('a', ))
+        except:
+            assert False
+
+    def test_typing_primitive_tuple(self):
+        self.assertRaises(RuntimeTypeCheckError, typing_primitive_tuple, ('a', 10))
+        self.assertRaises(RuntimeTypeCheckError, typing_primitive_tuple, ('a', 10, 'a'))
+
+        try:
+            typing_primitive_tuple(('a', 10, ['items']))
+        except:
+            assert False
+
+    def test_typing_combined_tuple(self):
+        self.assertRaises(RuntimeTypeCheckError, typing_combined_tuple, ((), ()))
+        self.assertRaises(RuntimeTypeCheckError, typing_combined_tuple, (('a',), ('a', 10)))
+        self.assertRaises(RuntimeTypeCheckError, typing_combined_tuple, (('a', 10), ('a', 'a')))
+        self.assertRaises(RuntimeTypeCheckError, typing_combined_tuple, (('a', 'a'), ('a', 10)))
+
+        try:
+            typing_combined_tuple((('a', 10), ('a', 10)))
+        except:
+            assert False
+
+    def test_typing_union(self):
+        self.assertRaises(RuntimeTypeCheckError, typing_primitive_union, [])
+        self.assertRaises(RuntimeTypeCheckError, typing_primitive_union, ())
+        self.assertRaises(RuntimeTypeCheckError, typing_primitive_union, None)
+
+        try:
+            typing_primitive_union('a')
+            typing_primitive_union(10)
+            typing_combined_union('a')
+            typing_combined_union(10)
+        except:
+            assert False
+
+    def test_typing_blank_type_var(self):
+        try:
+            typing_blank_type_var('a')
+            typing_blank_type_var([])
+            typing_blank_type_var(())
+        except:
+            assert False
+
+    def test_typing_primitive_type_var(self):
+        self.assertRaises(RuntimeTypeCheckError, typing_primitive_type_var, ())
+        self.assertRaises(RuntimeTypeCheckError, typing_primitive_type_var, [])
+
+        try:
+            typing_primitive_type_var('a')
+            typing_primitive_type_var(10)
+        except:
+            assert False
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -31,7 +31,11 @@ get_personal_info("John", 28.5)  # RuntimeTypeCheckError
 If you like the decorator, please consider contributing to the project as there are many issues to resolve.
 Please refer to the Progress section in order to figure out what is required.
 
-Do not hesitate to fork the project and make the pull request :)
+How to contribute:
+1. Make a fork
+2. Add changes
+3. If possible, add tests for your changes
+4. Submit a pull request :)
 
 ## Progres
 - [x] primitive types (e.g. `int`, `string`, ...)
@@ -50,5 +54,5 @@ Do not hesitate to fork the project and make the pull request :)
 - [x] Travis-CI
 - [ ] write better readme including tutorials, external resources etc.
 
-## Contribution
-Huge thanks to [Tomas Hromada @gyfis](https://github.com/gyfis) for setting up the unit tests and overall support.
+## Thanks
+[Tomas Hromada @gyfis](https://github.com/gyfis) for setting up the unit tests and overall support.
