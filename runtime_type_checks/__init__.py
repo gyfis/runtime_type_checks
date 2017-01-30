@@ -46,7 +46,7 @@ def _type_eq(value, value_type):
 
         if not all(_type_eq(inner_value, inner_value_type)
                    for inner_value, inner_value_type
-                   in zip(value, value_type.__tuple_params__)):
+                   in zip(value, tuple_params)):
             return False
 
         return True
